@@ -43,12 +43,10 @@ function trapFocus(element) {
 
 document.getElementById('open-menu').addEventListener('click', function() {
     var menu = document.getElementById('offcanvas-menu');
-    menu.classList.add('open');
+    menu.setAttribute('aria-expanded', 'true');
     this.setAttribute('aria-expanded', 'true');
-
     
     trapFocus(menu);
-  
     var focusableEls = menu.querySelectorAll('a, button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
     if (focusableEls.length > 0) {
         focusableEls[0].focus();
@@ -57,15 +55,15 @@ document.getElementById('open-menu').addEventListener('click', function() {
 
 document.getElementById('close-menu').addEventListener('click', function() {
     var menu = document.getElementById('offcanvas-menu');
-    menu.classList.remove('open');
+    menu.setAttribute('aria-expanded', 'false');
     document.getElementById('open-menu').setAttribute('aria-expanded', 'false');
 });
 
 document.addEventListener('keydown', function(e) {
     if (e.key === "Escape") {
         var menu = document.getElementById('offcanvas-menu');
-        if (menu.classList.contains('open')) {
-            menu.classList.remove('open');
+        if (menu.getAttribute('aria-expanded') === 'true') {
+            menu.setAttribute('aria-expanded', 'false');
             document.getElementById('open-menu').setAttribute('aria-expanded', 'false');
         }
     }

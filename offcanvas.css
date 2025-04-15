@@ -1,8 +1,4 @@
-
-
-
 #offcanvas-menu {
-    color:aliceblue ;
     position: fixed;
     top: 0;
     left: 0;
@@ -18,9 +14,12 @@
     border-radius: 0 5px 5px 0;
     text-align: left;
 }
-#offcanvas-menu.open {
+
+/* Le menu s'affiche quand aria-expanded="true" */
+#offcanvas-menu[aria-expanded="true"] {
     transform: translateX(0);
 }
+
 #offcanvas-menu button#close-menu {
     background: transparent;
     border: none;
@@ -94,4 +93,3 @@
     0% { background-position: 0% }
     100% { background-position: 100% }
 }
-
