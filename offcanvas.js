@@ -41,32 +41,65 @@ function trapFocus(element) {
     });
 }
 
-document.getElementById('open-menu').addEventListener('click', function() {
-    var menu = document.getElementById('offcanvas-menu');
-    menu.setAttribute('aria-expanded', 'true');
-    this.setAttribute('aria-expanded', 'true');
-    
-    trapFocus(menu);
-    var focusableEls = menu.querySelectorAll('a, button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
+// Suppression de l'ancienne gestion via le bouton "open-menu"
+// (Assurez-vous de retirer ou de masquer le bouton d'ouverture dans index.html)
+
+var offcanvasMenu = document.getElementById('offcanvas-menu');
+var autoOpenTimer = null;
+var autoOpenThreshold = 20;     // distance en pixels depuis le bord gauche
+var autoOpenDelay = 500;        // délai (ms) avant ouverture automatique
+
+// Ouvre le menu grâce à l'attribut aria-expanded
+function openMenuAutomatically() {
+    offcanvasMenu.setAttribute('aria-expanded', 'true');
+    trapFocus(offcanvasMenu);
+    var focusableEls = offcanvasMenu.querySelectorAll('a, button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
     if (focusableEls.length > 0) {
         focusableEls[0].focus();
     }
-});
+}
 
-document.getElementById('close-menu').addEventListener('click', function() {
-    var menu = document.getElementById('offcanvas-menu');
-    menu.setAttribute('aria-expanded', 'false');
-    document.getElementById('open-menu').setAttribute('aria-expanded', 'false');
-});
+// Ferme le menu en réinitialisant aria-expanded
+function closeMenuAutomatically() {
+    offcanvasMenu.setAttribute('aria-expanded', 'false');
+}
 
-document.addEventListener('keydown', function(e) {
-    if (e.key === "Escape") {
-        var menu = document.getElementById('offcanvas-menu');
-        if (menu.getAttribute('aria-expanded') === 'true') {
-            menu.setAttribute('aria-expanded', 'false');
-            document.getElementById('open-menu').setAttribute('aria-expanded', 'false');
+// Détection de la proximité du curseur sur le bord gauche
+document.addEventListener('mousemove', function(e) {
+    // S'il est dans la zone de déclenchement et que le menu n'est pas déjà ouvert
+    if(e.clientX <= autoOpenThreshold && offcanvasMenu.getAttribute('aria-expanded') !== 'true') {
+        if (!autoOpenTimer) {
+            autoOpenTimer = setTimeout(function() {
+                openMenuAutomatically();
+                autoOpenTimer = null;
+            }, autoOpenDelay);
+        }
+    } else {
+        if (autoOpenTimer) {
+            clearTimeout(autoOpenTimer);
+            autoOpenTimer = null;
+        }
+        // Si le menu est ouvert et que le curseur s'éloigne de la zone du menu, on le ferme
+        if(offcanvasMenu.getAttribute('aria-expanded') === 'true') {
+            var menuRect = offcanvasMenu.getBoundingClientRect();
+            // Si le curseur est à plus de 50px du bord droit du menu
+            if(e.clientX > (menuRect.right + 50)) {
+                closeMenuAutomatically();
+            }
         }
     }
+});
+
+// Gestion de la fermeture avec la touche ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === "Escape" && offcanvasMenu.getAttribute('aria-expanded') === 'true') {
+        closeMenuAutomatically();
+    }
+});
+
+// La gestion du bouton de fermeture reste inchangée
+document.getElementById('close-menu').addEventListener('click', function() {
+    closeMenuAutomatically();
 });
 
 document.getElementById('chat-button').addEventListener('click', function () {
