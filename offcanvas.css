@@ -1,13 +1,17 @@
 #offcanvas-menu {
     position: fixed;
     top: 0;
-    left: -250px;
+    left: 0;
     width: 250px;
     height: 100%;
     background: #f8f9fa;
     overflow-y: auto;
-    transition: left 0.5s ease;
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
     z-index: 1000;
+}
+#offcanvas-menu.open {
+    transform: translateX(0);
 }
 #offcanvas-menu button#close-menu {
     background: transparent;
@@ -27,19 +31,18 @@
     position: fixed;
     top: 10px;
     left: 10px;
-    z-index: 900; /* affiché en dessous de #offcanvas-menu (z-index: 1000) */
-    background-color: #007bff;   
-    color: #fff;                
-    border: none;                
-    padding: 10px 15px;          
-    border-radius: 4px;         
-    cursor: pointer;            
+    z-index: 900;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
     transition: background-color 0.5s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
-
 #open-menu:hover {
-    background-color: #0056b3;   /* Changement de couleur au hover */
+    background-color: #0056b3;
 }
 #chat-button {
     position: fixed;
