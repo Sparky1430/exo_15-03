@@ -284,59 +284,6 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 <footer class="w3-container w3-theme-d5">
   <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
 </footer>
- 
-<script>
-// Accordion
-function myFunction(id) {
-  var x = document.getElementById(id);
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-    x.previousElementSibling.className += " w3-theme-d1";
-  } else { 
-    x.className = x.className.replace("w3-show", "");
-    x.previousElementSibling.className = 
-    x.previousElementSibling.className.replace(" w3-theme-d1", "");
-  }
-}
-
-// Used to toggle the menu on smaller screens when clicking on the menu button
-function openNav() {
-  var x = document.getElementById("navDemo");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-  } else { 
-    x.className = x.className.replace(" w3-show", "");
-  }
-}
-
-// Menu off-canvas
-document.getElementById('open-menu').addEventListener('click', function() {
-  document.getElementById('offcanvas-menu').style.left = '0';
-});
-document.getElementById('close-menu').addEventListener('click', function() {
-  document.getElementById('offcanvas-menu').style.left = '-250px';
-});
-
-// Bouton de chat : affichage d'un chat aléatoire pendant 4-5 sec avec fade out
-document.getElementById('chat-button').addEventListener('click', function() {
-  var modal = document.getElementById('chat-modal');
-  // Utilisation de cataas.com pour une image chat aléatoire
-  document.getElementById('chat-image').src = 'https://cataas.com/cat?time=' + new Date().getTime();
-  modal.style.display = 'block';
-  modal.style.opacity = 1;
-  // Après 4 secondes, lancer le fade out
-  setTimeout(function() {
-    modal.style.transition = 'opacity 1s';
-    modal.style.opacity = 0;
-  }, 4000);
-  // Masquer complètement le modal après 5 secondes et réinitialiser les styles
-  setTimeout(function() {
-    modal.style.display = 'none';
-    modal.style.transition = '';
-    modal.style.opacity = 1;
-  }, 5000);
-});
-</script>
-<script src="offcanvas.js"></script>
+ <script src="offcanvas.js"></script>
 </body>
 </html>
